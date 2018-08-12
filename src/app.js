@@ -2,12 +2,7 @@ const pModal = document.getElementById('pModal')
 const select = document.getElementById('foodList')
 const ver = document.getElementById('ver-btn')
 let food
-
-ver.addEventListener('click', showModal)
-
-function showModal(){
-  $('#myModal').modal()
-}
+let msn = document.getElementById("modalP");
 
 function getData (method, url) {
       return new Promise(function (resolve, reject) {
@@ -45,18 +40,13 @@ for (let i = 0; restaurants.results.items.length; i++){
   
   select.options[select.options.length] = new Option(restaurants.results.items[i].title, restaurants.results.items[i].title)
 }
- select.addEventListener('change', changeOption)
-
-/*function changeOption(){ NO SELECCIONA OPCION
-  food = select.selectedIndex
-  console.log(food)
-}
-  changeOption();*/
-
            xhr.open()
          }).catch(function (err) {
          })
-        
-          
-        
-    
+                 
+function changeOption(){
+  let x = select.selectedIndex;
+  let y = select.options;
+  $('#myModal').modal();
+  msn.innerHTML= ("Restaurant: " + y[x].text + " ubicado en: " + y[x].index);   
+}
