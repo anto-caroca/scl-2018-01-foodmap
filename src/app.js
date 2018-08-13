@@ -3,7 +3,9 @@ const select = document.getElementById('foodList')
 const ver = document.getElementById('ver-btn')
 let food
 let msn = document.getElementById("modalP");
-
+let modalHeader = document.getElementById("modalH");
+let address;
+let restaurants
 function getData (method, url) {
       return new Promise(function (resolve, reject) {
        var xhr = new XMLHttpRequest()
@@ -29,15 +31,14 @@ function getData (method, url) {
      }
     
      getData('GET', 'https://places.demo.api.here.com/places/v1/discover/search?at=-33.4167%2C-70.65&q=restaurant&app_id=YTwDUxFfBXp7TI2GimXS&app_code=qlKZLMttFtDmjErf3WAolA').then(function (data) {
-  let restaurants = JSON.parse(data)
-  console.log(restaurants)
+   restaurants = JSON.parse(data)
+ // console.log(Object.entries(restaurants.results.items[19]))  //[19] = indice restaurant La PLaya
+ //let indexRest = Object.entries(restaurants.results.items[19]);
+ //console.log(indexRest[6][1]) // muestra dirección // Avenida Arzobispo Valdivieso<br/>8420000 Cementerios, Recoleta, Región Metropolitana de Santiago
+  console.log(restaurants) // Calle Profesor Alberto Zañartu 852<br/>8420000 Cementerios, Recoleta<br/>Chile
   
-  // let c = Array.from(restaurants.results.items) 
-  /// contenido.innerHTML += 
- // Object.entries(c).forEach((x) => document.write(x[1].title));
-  
+   
 for (let i = 0; restaurants.results.items.length; i++){
-  
   select.options[select.options.length] = new Option(restaurants.results.items[i].title, restaurants.results.items[i].title)
 }
            xhr.open()
@@ -47,6 +48,10 @@ for (let i = 0; restaurants.results.items.length; i++){
 function changeOption(){
   let x = select.selectedIndex;
   let y = select.options;
+  let indexRest = Object.entries(restaurants.results.items[x]);
+  let vicinity = indexRest[6][1];
+
   $('#myModal').modal();
-  msn.innerHTML= ("Restaurant: " + y[x].text + " ubicado en: " + y[x].index);   
+  modalHeader.innerHTML= ( y[x].text); 
+  msn.innerHTML= (" Dirección: " + vicinity);   
 }
